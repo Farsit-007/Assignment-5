@@ -56,17 +56,17 @@ for(let s of sButton){
 }
 
 applybtn.addEventListener('click',function(){
-    const couponCode = takeinputValue('inputCupon');
+    let couponCode = takeinputValue('inputCupon');
     if(couponCode === 'NEW15'){
         const grandN1 = newTotalPrice * 0.15;
-        const grandTotal = newTotalPrice - grandN1;
+        let grandTotal = newTotalPrice - grandN1;
         setInnertText('grand_total',grandTotal);
         setInnertText('totalPrice',grandTotal);
         hideOption('applyHIde');
     }
     else if(couponCode === 'Couple 20'){
         const grandN1 = newTotalPrice * 0.2;
-        const grandTotal = newTotalPrice - grandN1;
+        let grandTotal = newTotalPrice - grandN1;
         setInnertText('grand_total',grandTotal);
         setInnertText('totalPrice',grandTotal);
         hideOption('applyHIde');
@@ -76,6 +76,8 @@ applybtn.addEventListener('click',function(){
     }
 })
 
+    
+
 
 
 
@@ -84,6 +86,8 @@ function hideOption(elementId){
     const hideIt = document.getElementById(elementId);
     hideIt.classList.add('hidden');
 }
+
+
 
 function takeinputValue(elementId){
     const element = document.getElementById(elementId);
@@ -95,3 +99,69 @@ function setInnertText(elementId,value){
     element.innerText = value;
 }
 
+
+function showOption(elementId) {
+    const hideIt = document.getElementById(elementId);
+        hideIt.classList.remove('hidden');
+}
+
+function clearForm() {
+    const inputs = document.querySelectorAll('form input');
+    inputs.forEach(input => input.value = '');
+    sCount = 0;
+    setInnertText('seat-count',sCount);
+
+    const app = document.getElementById('app-section');
+    while (app.firstChild) {
+        app.removeChild(app.firstChild);
+    }
+    
+    showOption('applyHIde');
+
+    const couponInput = document.getElementById('inputCupon');
+    couponInput.value = '';
+
+    const applybtn = document.getElementById('applybtn');
+    applybtn.setAttribute('disabled', '');
+    grandTotal = 0;
+    newTotalPrice = 0;
+    setInnertText('grand_total',grandTotal);
+        setInnertText('totalPrice',grandTotal);
+}
+
+
+
+
+
+
+function showModal() {
+    const modal = document.getElementById('my_modal_5');
+    modal.showModal();
+}
+
+function hideModal() {
+    const modal = document.getElementById('my_modal_5');
+    modal.close();
+}
+
+
+
+function handleSubmit(event) {
+    event.preventDefault(); 
+
+    const phone = document.getElementById('num').value;
+    const email = document.getElementById('email').value;
+
+    
+    if (phone && email) {
+        showModal(); 
+    } else {
+        alert('Please fill in all required fields.');
+    }
+}
+
+document.querySelector('form').addEventListener('submit', handleSubmit);
+document.querySelector('.modal-action button').addEventListener('click', function() {
+    hideModal();
+    clearForm();
+});
